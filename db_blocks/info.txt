@@ -1,0 +1,7 @@
+The "db_blocks" folder is required !!!. It will contain all generated block transactions of the form:
+
+- db_blocks
+--> block-NUMBER
+---> (Example) Exodus: ab18252b7c3c48968b17169b6be14b25cd613dc2ce2b68250054a2c2bfea4532 | 
+               Output: 4bf7d9921640d5f581d87f9e643726a4b5e3b8a1abb7b8af6700d6e2742c1e78
+     ...

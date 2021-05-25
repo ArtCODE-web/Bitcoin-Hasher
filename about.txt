@@ -1,0 +1,41 @@
+About the application
+_____________________
+
+Bitcoin Hasher - a small client-server application written in the Node.js platform.
+Bitcoin Hasher is designed to download and generate preimages of downloaded hashes from the Blockchain website.
+The application was developed on the basis of reading the article presented in pdf format: http://math.isu.ru/ru/chairs/tpdm/docs/Platonovskie2019/Gilmanshin-R.-R.pdf
+
+For what ?
+_________
+
+To find collisions in the hashing algorithm SHA-256.
+
+Installing the app
+__________________
+
+To install Bitcoin Hasher, follow the instructions:
+1. Install the Node.js framework: https://nodejs.org/en/
+2. Download app files from GitHub
+3. In the application, open the Command Prompt by calling: Shift + RMB -> Open a command window
+4. In the console, enter the command: "npm run dev". In an open browser, go to http://localhost:8000
+5. See instructions for using the application
+
+Working with the application
+____________________________
+
+To work with the Bitcoin Hasher app, follow the instructions:
+1. After opening the application in the browser, enter the hash of the initial block of the Blockchain network. 
+   You can view all blocks on the Blockchain website: https://www.blockchain.com/explorer/?utm_campaign=dcomnav_explorer
+   (For example, the hash of the block is indicated: 00000000000000000005025da315f71a6b96aa90f49ad29814dd4f11015adeeb, the block has 665862 position in the Blockchain)
+2. Click on the button: Generate
+3. After that, the process of generating transactions specified in the blocks will go. You can view the generated transactions in the folder with the application: /db_blocks
+4. To stop generating, click on the "Terminate the connection" button
+5. To exit the application, close the command line and the page in the browser.
+
+
+
+
+
+
+
+

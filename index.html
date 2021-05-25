@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Hasher v.1.0.0</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    @keyframes rotation {
+        0%{
+            transform: rotate(0deg);
+        }100%{
+            transform: rotate(360deg);
+        }
+    }
+    *{padding:0;margin: 10px 0;}
+    .data-block{border-bottom: 5px solid #ccc;display:block;margin:0 auto;width:100%;text-align:center;font-size:18px;background: #000;padding: 5px;border-radius:10px;color:#ccc;margin-bottom:10px;}
+    .data-block:hover{background:#ccc;border-bottom: 5px solid #000;}
+    .data-block:hover .b{color:#8f8f8f;}
+    .data-block:hover #hash-block .hash{color:#000;}
+    .data-block:hover .transactions-number{color:#000;}
+    #hash-block .hash{color:#fff;}
+    .transactions-number{color:#fff;}
+    .b{display:block;}
+    .fa-spinner-third{font-size: 18px;animation: rotation 1s ease infinite;margin:0;}
+    .container{display:block;margin:0 auto;width:1100px;}
+    button{height:100%;border-radius: 5px;display:block;margin: 0 auto;background: transparent;border: 3px solid #000;padding: 10px 20px;outline: none;font-size: 18px;font-family:"Roboto", sans-serif;cursor:pointer;}
+    #start-input{box-shadow: 0 0 15px #ccc;width:100%;display:block;padding: 10px;outline:none;border-radius: 5px;margin-bottom: 10px;color:#000;border: 1px solid #000;}
+    #value_transaction{box-shadow: 0 0 15px #ccc;width:100%;display:block;padding: 10px;outline:none;border-radius: 5px;margin-bottom: 10px;color:#000;border: 1px solid #000;}
+    .flexe-block{display:flex;}
+    .flexe-block .info-block{width: 100%;background: #ccc; margin-left: 5px;border-radius: 5px;text-align:center;padding-top: 10px;}
+    .flexe-block .info-block span{text-align:center;width:100%;margin:0 auto;font-size: 18px;}
+    .error-active{background: #FFD700 !important;}
+    .start-active{background: #00FF7F !important;}
+    .footer-info{text-align: center;}
+    .footer-info span{font-size: 12px;color:#8b8b8b;}
+    .fa-check{margin:0;padding: 0;color: #00FF7F !important;}
+    h2{text-align:center;margin-bottom: 25px;}
+    .param-config-info{border: 1px solid #ccc;border-radius: 10px;padding: 10px;border-bottom: 4px solid #000;}
+    .param-config-info .head{text-align:center;font-size: 18px;color: #8f8f8f;border-bottom: 1px solid #ccc;}
+    .param-config{margin: 5px;width: 100%;}
+    .param-config form{height: 100%;}
+    .param-config-info .info{text-align: center;}
+    .param-config-info{height:100%;}
+    button#exit{width: 100%;border: 3px dashed red;color:red;}
+    .system-config{display: flex;align-items:stretch;}
+    
+    @media screen and (max-width: 829px)
+    {
+        .footer-info{width: 100% !important;position:relative !important;transform: none !important;left: 0 !important;text-align:center;}
+    }
+    @media screen and (max-width: 575px)
+    {
+        .container{width: 100% !important;}
+        .flexe-block{display: block;}
+        .butt button{width: 100%;}
+        .info-block{margin: 0 !important;padding: 10px !important;}
+        .system-config{display: block !important;}
+        .param-config:last-child{position:fixed;bottom: 0;left:0;margin:0;background:#fff;box-shadow: 5px 0px 15px;}
+        .param-config:last-child form{padding: 5px;}
+        .param-config{margin: 0 !important;}
+    }
+</style>
+<body>
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <h2>Bitcoin Hasher v.1.0.0</h2>
+                <form method = "POST" action = "/">
+                    <span class = "data-block">
+                        <span id = "hash-block" class = "b">Processed block: <span class = "hash"></span></span>
+                        <span id = "transactions" class = "b">The number of confirmed transactions in a block: <span class = "transactions-number"></span></span>
+                        
+                        <input type = "text" id = "hashes" name = "hashes" hidden>
+                    </span>
+                    <input placeholder = "Enter the hash of the initial block. For example: (0000000000000000000087f0cf9e938f9d367ca8205a518c3a23dc957518a89)" type = "text" id = "start-input">
+                    <div class = "flexe-block">
+                        <div class = "butt"><button id = "generate" type = "submit">Generate</button></div>
+                        
+                        <div class = "info-block">
+                            <span>Notification display unit...</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class = "footer-info">
+        <span><i class="fas fa-info-circle"></i>&nbsp;It is recommended to close unnecessary tabs and programs before starting!</span>
+    </div>
+    <div class = "container">
+        <div class = "system-config"> 
+            <div class = "param-config">
+                <div class = "param-config-info">
+                    <div class = "head">
+                        <i class="fas fa-microchip"></i>
+                        <span>Processor</span>
+                    </div>
+                    <div class = "info">
+                        <span>{{cpu-data}}</span>
+                    </div>       
+                </div>
+            </div>
+            <div class = "param-config">
+                <div class = "param-config-info">
+                    <div class = "head">
+                        <i class="fas fa-memory"></i>
+                        <span>Memory</span>
+                    </div>
+                    <div class = "info">
+                        <span>{{memory-data}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class = "param-config">
+                <form method = "GET" action = "/">
+                    <button type = "submit" id = "exit">Terminate the connection</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        
+        window.onload = function()
+        {
+            
+            let start_input = document.querySelector("#start-input");
+            let info_block = document.querySelector(".info-block");
+            let info_span = info_block.querySelector("span");
+            let butt = document.querySelector("#generate");
+            let butt_close = document.querySelector("button#exit");
+
+            let start_block;
+            start_input.oninput = () => {
+                start_block = start_input.value;
+            }
+            
+            async function Request(url)
+            {
+               
+                let cors = "?cors=true";
+                this.xhr = await fetch(`${url}${cors}`);
+                
+                this.data = await this.xhr.json();
+                for(let key in data)
+                {
+                    if(key == "hash"){
+                        let hash_block = document.querySelector(".hash").textContent = this.data[key];
+                    }else if(key == "tx"){
+                        let transactions = document.querySelector(".transactions-number").textContent = this.data[key].length;
+                    }
+
+                }
+                
+                return this.data;
+                   
+            }
+
+        let block_next;
+
+        function generateTransactions(active_block){
+             return req(active_block).then(async (data) =>
+             { 
+                try{
+                   block_next = await data.prev_block;
+                   let data_json = block_next, data_transactions = await data.data.tx;
+                   generateTransactions(block_next !== undefined ? block_next : start_block);
+
+                   for(let i = 0; i < data_transactions.length; i++)
+                   {
+                       if(active_block != "0000000000000000000000000000000000000000000000000000000000000000")
+                       {
+                          AJAX(data_transactions[i].hash, data.data.height);
+                       }else{
+                           info_span.innerHTML = `No blocks, all transactions were recorded !`;
+                           butt.innerHTML = `<i class="far fa-check"></i>`;
+                           return false;
+                       }
+                       
+                   }
+                   
+                }catch(err)
+                {
+                   // Error when working with requests to the Blockchain
+                   return req(block_next).then(async (data) =>
+                   {
+                       block_next_next = await data.prev_block;
+                       let data_json_json = block_next_next, data_transactions_transactions = await data.data.tx;
+                       generateTransactions(block_next_next);
+                       for(let i = 0; i < data_transactions_transactions.length; i++)
+                       {
+                           if(block_next != "0000000000000000000000000000000000000000000000000000000000000000")
+                           {
+                              AJAX(data_transactions_transactions[i].hash, data.data.height);
+                              
+                           }else{
+                              info_span.innerHTML = `No blocks, all transactions were recorded !`;
+                              butt.innerHTML = `<i class="far fa-check"></i>`;
+                              return false;
+                           }
+                       }
+                   })
+                }
+            })
+        }
+       
+        async function req(arra)
+        {
+            let start_block = arra;
+            let r = Request(`https://blockchain.info/rawblock/${start_block}`)
+            .then((data) => {
+                if(data.error)
+                {
+                    info_block.classList.add("error-active");
+                    info_span.innerHTML = `Block not found !. Please refresh the page to continue: <a href = "${window.location}">${window.location}</a>`;
+                    return false;
+                }else{
+                    let prev_block = data.prev_block;
+                    let height = data.height;
+                    info_block.classList.add("start-active");
+                    info_span.innerHTML = `Found the required block, blocks in the queue: ${height}`;
+                    return {
+                        prev_block: prev_block,
+                        data: data
+
+                    }
+                }
+                    
+            }).catch((err) => {  
+                info_block.classList.add("error-active");
+                info_span.innerHTML = `Block not found !. Please refresh the page to continue: <a href = "${window.location}">${window.location}</a>`;
+                
+            });
+
+             return r;
+                    
+        }
+            
+        
+        butt.addEventListener("click", 
+           async function(ev)
+           {
+              ev.preventDefault();
+              butt.disabled = true;
+              butt.innerHTML = `<i class="fad fa-spinner-third"></i>`;
+             
+              try{
+                  setTimeout(() => {
+                     generateTransactions(block_next !== undefined ? block_next : start_block);
+                  }, 1000);
+            
+               }catch(err){
+                  console.log(`Unexpected error: ${err}`);
+               }
+                
+            });
+
+            function AJAX(data_req, counter)
+            {
+                let xhr = new XMLHttpRequest();
+                let query = `/?hashes=${data_req}&block_number=${counter}`;
+                xhr.open("POST", "/hashes", false);
+                xhr.addEventListener("readystatechange", () => 
+                {
+                    if(xhr.status == 200)
+                    {
+                       //console.log(xhr.responseText);
+                    }else{
+                       console.log(`Status: ${xhr.status} | StatusText: ${xhr.statusText}`);
+                    }
+                })
+                xhr.send(query);
+            }
+           
+        }
+    </script>
+</body>
+</html>
